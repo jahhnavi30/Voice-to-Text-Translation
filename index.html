@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice to Text</title>
+</head>
+<body>
+  <h2>🎤 Voice to Text Conversion</h2>
+  <button id="startBtn">Start Speaking</button>
+  <p><strong>Output:</strong> <span id="output"></span></p>
+
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const output = document.getElementById("output");
+
+    // Check if browser supports speech recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    recognition.lang = "en-US"; // Language
+    recognition.interimResults = false; // Only final results
+    recognition.maxAlternatives = 1;
+
+    startBtn.onclick = () => {
+      recognition.start();
+    };
+
+    recognition.onresult = (event) => {
+      const text = event.results[0][0].transcript;
+      output.textContent = text;
+      console.log("Voice Input:", text);
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Error:", event.error);
+    };
+  </script>
+</body>
+</html>
